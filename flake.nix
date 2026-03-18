@@ -18,6 +18,8 @@
             # JavaScript / TypeScript
             nodejs
             corepack
+            # Elm
+            elmPackages.elm
           ];
         };
       }
