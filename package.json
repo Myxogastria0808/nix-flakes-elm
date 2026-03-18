@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "dev": "elm-watch hot",
+    "serve": "serve . -l 3000"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.27.0",
   "devDependencies": {
-    "elm-watch": "^1.2.6"
+    "elm-watch": "^1.2.6",
+    "serve": "^14.2.6"
   }
 }
