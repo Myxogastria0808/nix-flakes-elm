@@ -146,3 +146,6 @@ pnpm run elm
 pnpm run dev
 ```
 
+## References
+
+https://lydell.github.io/elm-watch/
