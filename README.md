@@ -1,17 +1,10 @@
 # nix-flakes-elm
 
-Nix Flakes + Elm の開発環境サンプルです。
+## Setup
 
-## 必要なもの
+0. set `flake.nix`, `.envrc` and `.gitignore`
 
-- [Nix](https://nixos.org/download/) (Flakes 有効化済み)
-- [direnv](https://direnv.net/)
-
-## セットアップ
-
-### 1. `flake.nix` の用意
-
-以下の内容で `flake.nix` を作成します。
+- flake.nix
 
 ```nix
 {
@@ -43,78 +36,113 @@ Nix Flakes + Elm の開発環境サンプルです。
 }
 ```
 
-### 2. `.envrc` の用意
-
-以下の内容で `.envrc` を作成します。
+- .envrc
 
 ```
 use flake
 ```
 
-direnv に許可を与えます。
+- .gitignore
 
-```bash
+```
+# Elm
+/build
+/elm-stuff
+/node_modules
+
+
+# Nix
+/.direnv
+```
+
+1. setup devShell
+
+```sh
 direnv allow
 ```
 
-これにより、ディレクトリに入ると自動で Nix の開発シェル（Node.js、corepack、elm）が有効になります。
+2. pnpm init
 
-### 3. 依存パッケージのインストール
-
-```bash
-pnpm install
+```sh
+pnpm init
 ```
 
-## 開発サーバーの起動
+3. install `elm-watch` and `serve`
 
-ターミナルを2つ使います。
-
-**ターミナル 1 — elm-watch（Elm のコンパイル & hot reload）**
-
-```bash
-pnpm dev
+```sh
+pnpm add -D elm-watch serve
 ```
 
-elm-watch が `src/Main.elm` を監視し、変更があると `build/main.js` を自動で再コンパイルします。
+4. elm-watch init
 
-**ターミナル 2 — 静的ファイルサーバー**
-
-```bash
-pnpm serve
+```sh
+pnpm exec elm-watch init
 ```
 
-http://localhost:3000 をブラウザで開いてください。
+5. elm init
 
-## プロジェクト構成
-
-```
-.
-├── flake.nix          # Nix 開発環境の定義
-├── .envrc             # direnv 設定（use flake）
-├── elm.json           # Elm プロジェクト設定
-├── elm-watch.json     # elm-watch 設定
-├── package.json       # npm パッケージ管理
-├── index.html         # エントリーポイント
-├── build/
-│   └── main.js        # elm-watch が出力するコンパイル済み JS
-└── src/
-    └── Main.elm       # Elm ソースコード
+```sh
+elm init
 ```
 
-## 設定ファイルの概要
+6. update `package.json`
 
-**`elm-watch.json`**
+- package.json
 
 ```json
 {
-    "port": 8000,
-    "targets": {
-        "My target name": {
-            "inputs": ["src/Main.elm"],
-            "output": "build/main.js"
-        }
-    }
+  ...
+  (omitted)
+  "scripts": {
+    "dev": "serve .",
+    "elm": "elm-watch hot"
+  },
+  (omitted)
+  ...
 }
 ```
 
-elm-watch の WebSocket サーバーはポート 8000 で動作します。ブラウザへの hot reload はこの WebSocket 経由で行われます。
+7. create `index.html` and `src/Main.elm`
+
+- index.html
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="build/main.js"></script>
+  </body>
+</html>
+```
+
+- src/Main.elm
+
+```elm
+module Main exposing (main)
+
+import Html exposing (text)
+
+
+main =
+    text "Hello, World!"
+```
+
+## Start Dev Server
+
+1. start elm dev server (websocket)
+
+```sh
+pnpm run elm
+```
+
+2. start http dev server (http)
+
+```sh
+pnpm run dev
+```
+

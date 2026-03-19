@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "elm-watch hot",
-    "serve": "serve . -l 3000"
+    "dev": "serve .",
+    "elm": "elm-watch hot"
   },
   "keywords": [],
   "author": "",
