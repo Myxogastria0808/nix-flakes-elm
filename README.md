@@ -107,15 +107,19 @@ elm init
 - index.html
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>example-minimal</title>
   </head>
   <body>
-    <script src="build/main.js"></script>
+    <div id="root"></div>
+    <script src="./build/main.js"></script>
+    <script>
+      Elm.Main.init({ node: document.getElementById("root") });
+    </script>
   </body>
 </html>
 ```
